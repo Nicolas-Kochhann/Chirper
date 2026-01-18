@@ -18,6 +18,7 @@ Access the course here:
 - Laravel project setup
 - Blade templating
 - Routes
+- Migrations
 - MVC pattern
 - Controllers
 - Models
