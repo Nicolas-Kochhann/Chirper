@@ -42,7 +42,7 @@ class ChirpController extends Controller
         [
             'message.required' => 'Please write something to chirp!',
             'message.max' => 'Chirps must be 255 characters or less.',
-        ]);
+    ]);
 
         auth()->user()->chirps()->create($validated);
 

@@ -20,11 +20,25 @@
         </div>
         <div class="navbar-end gap-2">
             @auth
-                <span class="text-sm">{{ auth()->user()->name }}</span>
-                <form method="POST" action="/logout" class="inline">
+                <a href="{{ route('getProfile') }}" class="btn btn-ghost btn-l gap-2">
+                @if(auth()->user()->picture)
+                    <figure class="rounded-full size-8">
+                        <img src="{{ asset('storage/images/' . auth()->user()->picture) }}" alt="Profile picture" class="rounded-full">
+                    </figure>
+                @else
+                    <figure class="rounded-full size-8">
+                        <img src="{{ asset('images/placeholders/profile.png') }}" alt="Profile picture">
+                    </figure>
+                @endif
+
+                    <span class="text-sm">{{ auth()->user()->name }}</span>
+                </a>
+
+            <form method="POST" action="/logout" class="inline">
                     @csrf
                     <button type="submit" class="btn btn-ghost btn-sm">Logout</button>
                 </form>
+                
             @else
                 <a href="/login" class="btn btn-ghost btn-sm">Sign In</a>
                 <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Sign Up</a>

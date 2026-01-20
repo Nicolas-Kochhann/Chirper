@@ -4,10 +4,12 @@ use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\ChirpController;
+use App\Http\Controllers\UserController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [ChirpController::class,'index']);
+Route::get('/', [ChirpController::class,'index'])
+    ->name('home');
 
 
 Route::middleware('auth')->group(function () {
@@ -51,3 +53,13 @@ Route::view('/login', 'auth.login')
 Route::post('login', Login::class)
     ->middleware('guest');
 
+
+// PROFILE ROUTES
+
+Route::get('/profile', [UserController::class,'show'])
+    ->middleware('auth')
+    ->name('getProfile');
+
+Route::post('/profile', [UserController::class, 'update'])
+    ->middleware('auth')
+    ->name('updateProfile');
