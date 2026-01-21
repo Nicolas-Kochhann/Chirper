@@ -36,20 +36,23 @@ class UserController extends Controller
             'message.min'=> 'Too short brother! 3 characters or more.',
         ]);
 
-        // 2. Deleta a imagem antiga (usando o disco 'public')
-        if ($user->picture) {
-            Storage::disk('public')->delete('images/' . $user->picture);
+        if($request->file('profile-picture')){
+
+            if ($user->picture) {
+                Storage::disk('public')->delete('images/' . $user->picture);
+            }
+
+            $file = $request->file('profile-picture');
+
+            $name = $file->hashName();
+
+            $file->storeAs('/images', $name, 'public');
+            
+            $user->picture = $name;
         }
 
-        $file = $request->file('profile-picture');
-        
-        $name = $file->hashName();
-
-        $file->storeAs('/images', $name, 'public');
-
         $user->name = $validated['name'];
-        $user->picture = $name;
-
+        
         $user->save();
 
         return redirect('/')->with('success','Profile successfully updated!');
